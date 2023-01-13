@@ -11,4 +11,7 @@ else:
         if X > i:
             X -= i
             count += 1
+        elif X == i:
+            print(count+1)
         else:
+            continue
