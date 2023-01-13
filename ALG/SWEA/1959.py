@@ -8,27 +8,28 @@ for _ in range(T):
     if len(A) > len(B):
         c = len(A)-len(B)
         for __ in range(c):
-            B.append(0)
-        for i in range(0, c):
+            B.insert(0, 0)
+        for i in range(0, c+1):
             sum = 0
             for a,b in zip(A, B):
                 sum += a*b
             result.append(sum)
-            B[i] = B[i-1]
+            del B[0]
+            B.append(0)
     elif len(B) > len(A):
         c = len(B)-len(A)
         for __ in range(c):
-            A.append(0)
-        for i in range(0, c):
+            A.insert(0, 0)
+        for i in range(0, c+1):
             sum = 0
             for a,b in zip(A, B):
                 sum += a*b
             result.append(sum)
-            A[c] = A[c+i]
+            del A[0]
+            A.append(0)
     else:
         sum = 0
         for a,b in A, B:
             sum += a*b
         result.append(sum)
-    print(result)
     print(f'#{_+1} {max(result)}')
