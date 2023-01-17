@@ -1,7 +1,11 @@
-N = int(input())
-num = []
-for i in range(N):
-    A = int(input())
-    num.append(A)
-for i in sorted(num):
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+li = []
+
+for i in range(n):
+    li.append(int(input()))
+
+for i in sorted(li):
     print(i)
