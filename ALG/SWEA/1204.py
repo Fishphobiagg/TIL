@@ -2,19 +2,20 @@
 
 T = int(input())
 
-for i in range(T):
+for _ in range(T):
+    t = int(input())
     a = []
     count = 0
     most_num = 0
-    for _ in range(1000):
-        b = int(input())
-        a.append(b)
-        if count < a.count(b):
-            count = a.count(b)
-            most_num = b
-        elif count == a.count(b):
-            if most_num < b:
-                most_num = b
+    b = list(map(int, input().split()))
+    for j in b:
+        a.append(j)
+        if count < a.count(j):
+            count = a.count(j)
+            most_num = j
+        elif count == a.count(j):
+            if most_num < j:
+                most_num = j
             else:
-                continue
-print(most_num)
+                pass
+    print(f'#{t} {most_num}')
