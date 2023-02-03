@@ -20,5 +20,5 @@ for i in range(3):
                 k += citizen -j
                 citizen += j
                 mobil_count += 1
-    print(f'#{i} {mobil_count}')
+    print(f'#{i+1} {mobil_count}')
             

@@ -10,4 +10,4 @@ for Test_num in range(T):
             max_num = i
         if min_num > i:
             min_num = i
-    print(f'#{Test_num} {max_num - min_num}')
+    print(f'#{Test_num+1} {max_num - min_num}')
