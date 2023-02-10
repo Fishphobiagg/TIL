@@ -1,4 +1,4 @@
-# 1로 만들기
+# 1로 만들기 (bottom-up)
 
 N = int(input())
 
