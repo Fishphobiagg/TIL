@@ -13,22 +13,26 @@ node = [tuple(map(int, input().split())) for _ in range(E)]
 node.sort(key=lambda x:x[2])
 parent = [i for i in range(V+1)]
 total_weight = 0
-num_trunk = 0
-def disjoint(x, y):
-    if parent[x] == parent[y]: # 사이클 발생
-        return False
+# 부모 찾기
+if V ==1:
+    print(0)
+    exit()
+
+def find_parent(x):
+    if parent[x] != x:
+        parent[x] = find_parent(parent[x])
+    return parent[x]
+def union(x, y):
+    x = find_parent(x)
+    y = find_parent(y)
+    if x > y:
+        parent[x] = y
     else:
-        return True
-start = min(node[0][0], node[0][1])
-for A, B, weight in node:
-    if parent[A] == parent[B]:
-        continue
-    if parent[A] == start or parent[B] == start:
-        parent[A], parent[B] = start, start
-    else:
-        parent[A], parent[B] = min(parent[A], parent[B]), min(parent[A], parent[B])
-    total_weight += weight
-    num_trunk += 1
-    if num_trunk == V-1:
-        print(total_weight)
-        break
+        parent[y] = x
+
+for A, B, cost in node:
+    if find_parent(A) != find_parent(B):
+        union(A, B)
+        total_weight += cost
+
+print(total_weight)
