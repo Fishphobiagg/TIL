@@ -1,19 +1,31 @@
 # 집합의 표현
-'''
-트리를 이용한 집합의 표현
-부모 노드를 설정해주고, 같은 부모노드를 갖고 있으면 YES
-'''
+import sys
+
+sys.setrecursionlimit(100000)
+
 N, M = map(int, input().split())
-
-parents = [i for i in range(N+1)] # 부모를 자기 자신으로 설정
-
-for i in range(M):
-    command, a, b = map(int, input().split())
-    if not command:
-        parents[b] = parents[a]
+parent = [i for i in range(N+1)]
+def find_parent(x):
+    if x != parent[x]:
+        parent[x] = find_parent(parent[x])
+    return parent[x]
+def union(x, y):
+    x = find_parent(x)
+    y = find_parent(y)
+    if x > y:
+        parent[x] = y
     else:
-        if parents[a] == parents[b]:
-            print('yes')
+        parent[y] = x
+for i in range(M):
+    command, A, B = map(int, input().split())
+    if command:
+        if find_parent(A) == find_parent(B):
+            print('YES')
         else:
-            while parents[a] == parents[b]
-            print('no')
+            print('NO')
+    else:
+        if A==B:
+            continue
+        union(A,B)
+
+print(parent)
