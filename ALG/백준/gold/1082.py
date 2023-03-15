@@ -1,16 +1,37 @@
-# 방 번호
+# 1082 방 번호
 
 '''
-스타트링크가 입주한 사무실은 방 번호를 직접 정할 수 있다. 방 번호를 정하려면 1층 문방구에서 파는 숫자를 구매해야 한다. 숫자를 구매하기 위해 준비한 금액은 M원이다.
-
-문방구에서 파는 숫자는 0부터 N-1까지이고, 각 숫자 i의 가격은 Pi이다. 문방구에서는 같은 숫자를 여러 개 구매할 수 있고, 문방구는 매우 많은 재고를 보유하고 있기 때문에, 항상 원하는 만큼 숫자를 구매할 수 있다. 방 번호가 0이 아니라면 0으로 시작할 수 없다.
-
-예를 들어, N = 3, M = 21, P0 = 6, P1 = 7, P2 = 8이라면, 만들 수 있는 가장 큰 방 번호는 210이다. 최대 M원을 사용해서 만들 수 있는 가장 큰 방 번호를 구해보자.
+M원까지 dp를 만들고, 각 요금마다 최대의 숫자를 dp에 넣어놓으면 된다.
+그 뒤는 최대의 숫자에
 '''
 
 N = int(input())
 num_price = list(map(int, input().split()))
 M = int(input())
 
-dp = []
+dp = [0]*(M+1)
+for i in range(N):
+    if num_price[i] > M:
+        continue
+    dp[num_price[i]] = i
+def room_number(x):
+    for i in range(N):
+        if x + num_price[i] <= M:
+            if not dp[x+num_price[i]]:
+                num = ''
+                for k in sorted(str(dp[x]) + str(i), reverse=True):
+                    num += k
+                dp[x+num_price[i]] = int(num)
+                room_number(x+num_price[i])
+            else:
+                num = ''
+                for k in sorted(str(dp[x]) + str(i), reverse=True):
+                    num += k
+                if dp[x+num_price[i]] < int(num):
+                    dp[x+num_price[i]] = int(num)
+                    room_number(x+num_price[i])
 
+for i in num_price:
+    room_number(i)
+
+print(max(dp))
