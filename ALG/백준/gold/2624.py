@@ -22,10 +22,9 @@ for idx, i in enumerate(money):
         continue
     for j in range(1,i[1]+1): # 동전 개수
         num = j*i[0]
-        if num > 10000:
-            continue
-        for k in range(0, num+1):
-            if k+num > 10000:
-                continue
-            dp[num+k] += 1
+        for k in range(T-num+1):
+            if dp[k]:
+                dp[k+num] += 1
+    for j in range(1, i[1]+1):
+        dp[j*i[0]] += 1
 print(dp[T])
