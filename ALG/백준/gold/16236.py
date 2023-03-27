@@ -1,4 +1,4 @@
-    # 아기상어뚜루룰루뚜루
+# 아기상어뚜루룰루뚜루
 from collections import deque
 '''
 0 : 빈칸
@@ -45,29 +45,35 @@ while True:
             ny = y + move[i][1]
             if nx < 0 or ny < 0 or nx == N or ny == N:
                 continue
-            if (nx, ny) == start:
+            if (nx, ny) == start: # 시작점은 돌아오지 않게 컨티뉴
                 continue
             if not visited[nx][ny]:
-                if shark < fishbowl[nx][ny]:
+                if shark < fishbowl[nx][ny]: # 못잡는 상어일 경우
                     continue
-                if not fishbowl[nx][ny] and not visited[nx][ny]:
+                if (not fishbowl[nx][ny] and not visited[nx][ny]) or (not visited[nx][ny] and fishbowl[nx][ny] == shark):
                     visited[nx][ny] = visited[x][y] + 1
                     Q.append((nx,ny))
+                    continue
                 elif fishbowl[nx][ny] and not visited[nx][ny]:
                     visited[nx][ny] = visited[x][y] + 1
                     if not catch:
                         catch = (nx, ny)
-                    else:
-                        if visited[nx][ny] < visited[catch[0]][catch[1]]:
+                    elif visited[nx][ny] < visited[catch[0]][catch[1]]:
+                        catch = (nx, ny)
+                    elif visited[nx][ny] == visited[catch[0]][catch[1]]:
+                        if nx < catch[0]:
+                            catch = (nx,ny)
+                        elif nx == catch[0]:
+                            if ny < catch[1]:
+                                catch = (nx,ny)
     if not catch:
         break
-    catch.sort()
-    print(catch)
-    fishbowl[catch[0][1]][catch[0][2]] = 0
-    time += catch[0][0]
+    fishbowl[catch[0]][catch[1]] = 0
+    time += visited[catch[0]][catch[1]]
     stack += 1
     if stack == shark:
         shark += 1
         stack = 0
-    start = (catch[0][1], catch[0][2])
+
+    start = (catch[0], catch[1])
 print(time)
