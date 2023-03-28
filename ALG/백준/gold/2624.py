@@ -28,3 +28,5 @@ for idx, i in enumerate(money):
     for j in range(1, i[1]+1):
         dp[j*i[0]] += 1
 print(dp[T])
+
+
