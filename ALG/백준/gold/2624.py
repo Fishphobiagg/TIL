@@ -1,30 +1,20 @@
-# 동전 소매치기
-import sys
-input = sys.stdin.readline
-
-'''
-t원을
-10원, 5원, 1원짜리로 바꾸기
-
-다 합친 값에서 빼가기?
-'''
-
 T = int(input())
 k = int(input())
-dp = [0]*10001
 
-money = [tuple(map(int,input().split())) for _ in range(k)]
-money.sort()
-for i in range(1, money[0][1]+1):
-    dp[i*money[0][0]] += 1
-for idx, i in enumerate(money):
-    if not idx:
-        continue
-    for j in range(1,i[1]+1): # 동전 개수
-        num = j*i[0]
-        for k in range(T-num+1):
-            if dp[k]:
-                dp[k+num] += 1
-    for j in range(1, i[1]+1):
-        dp[j*i[0]] += 1
+money, a = sorted([tuple(map(int,input().split())) for _ in range(k)], reverse=True), 0
+
+for i in range(k):
+    a += money[i][0]*money[i][1]
+
+dp = [0]*(T+1)
+dp[0] = 1 # dp 초항 설정
+for i in range(k):
+    std = [0]*(T+1)
+    for j in range(T+1):
+        if dp[j]:
+            for y in range(1, money[i][1]+1):
+                if j+money[i][0]*y > T:
+                    continue
+                std[j+money[i][0]*y] += dp[j]
+    dp = [std[i]+dp[i] for i in range(T+1)]
 print(dp[T])
