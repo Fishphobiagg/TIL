@@ -61,8 +61,8 @@ for k in range(5,0,-1):
                         p_map[i][j] = 0
                 if sum([p_map[q][p] for q in range(i-k//2, i+k//2+1) for p in range(j-k//2, j+k//2+1)]) == k**2:
                     ractangular[k] += 1
-                    for q in range(i-2, i+3):
-                        for p in range(j-2, j+3):
+                    for q in range(i-k//2, i+k//2+1):
+                        for p in range(j-k//2, j+k//2+1):
                             p_map[q][p] = 0
     elif k == 2: # 우측 하단으로만 검사
         for i in range(9):
@@ -76,9 +76,14 @@ for k in range(5,0,-1):
         for i in range(7):
             for j in range(7):
                 if sum([p_map[q][p] for q in range(i, i+4) for p in range(j, j+4)]) == 16:
-                    ractangular[2] += 1
+                    ractangular[4] += 1
                     for q in range(i, i+4):
                         for p in range(j, j+4):
                             p_map[q][p] = 0
-    print(p_map)
-print(ractangular)
+
+for i in ractangular:
+    if i > 5:
+        print(-1)
+        exit()
+
+print(sum(ractangular))
