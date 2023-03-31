@@ -1,32 +1,30 @@
 # 리쌍
 
-'''
-인접한 도시끼리 적절하게 나눠서 인구수차이를 최소화시킨다
-'''
 
 N = int(input())
-population = list(map(int, input().split()))
-node = [[] for _ in range(N+1)]
+population = list(map(int, input().split())) # 인구
+node = [[] for _ in range(N+1)] # 각 간선 연결받기
 for i in range(1, N+1):
-    for a in list(map(int,input().split()))[1:]:
+    for a in list(map(int,input().split()))[1:]: # 간선 추가
         node[i].append(a)
 ans = 1e7
 population = [0] + population
-all_set = []
+all_set = [] # 두 개로 나눈 조합 저장할 리스트
 def subset(x, left=[], right=[]):
     if x > N:
         if left and right:
+            
             all_set.append((left, right))
             return
         return
     subset(x+1, left+[x], right)
     subset(x+1, left, right+[x])
 
-def dfs(x, friend):
+def dfs(x, friend): # 나눠진 집합이 연결되어있는지 확인하기 위한 dfs
     global cnt
     for i in node[x]:
-        if i in friend:
-            if not visited[i]:
+        if i in friend: # 만약 같은 집합?
+            if not visited[i]: # 아직 노방문?
                 visited[i] = 1
                 cnt += 1
                 dfs(i, friend)
