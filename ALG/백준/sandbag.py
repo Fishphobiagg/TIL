@@ -1,8 +1,10 @@
-N = int(input())
-dp = [0]*(N+1)
-dp[0],dp[1] = 1, 1
+match_up = []
+result = [[0]*6 for _ in range(4)]
 
-for i in range(2, N+1):
-    dp[i] = dp[i-1] + dp[i-2]
+for i in range(4):
+    season = list(map(int,input().split()))
+    for j in range(0, 6):
+        result[i][j] = season[j*3]*3 + season[j*3+1]
 
-print(dp[N])
+print(result)
+print(3**15)
