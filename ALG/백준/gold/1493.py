@@ -1,19 +1,21 @@
-# Box 채우기
+length, width, height = map(int, input().split())
+n = int(input())
+cube = [list(map(int, input().split())) for _ in range(n)]
+volume = length * width * height
+ans = 0
+before = 0
+cube.sort(reverse=True)
 
-'''
-한 변의 길이 - 박스 종류 2**(박스 종류 번호)
-2차원 배열로 가로세로높이 표현
-
-같은단차인 경우에만 쌓을 수 있음
-'''
-
-l,w,h = map(int,input().split())
-N = int(input())
-ans = l*w*h
-used = 0
-cube = [0]*21
-for i in range(N):
-    a, b = map(int,input().split())
-    cube[a] += b
-
-for i in range(20, -1, -1):
+for w, cnt in cube:
+    print(before)
+    before <<= 3
+    v = 2 ** w
+    print(before)
+    maxCnt = (length // v) * (width // v) * (height // v) - before
+    maxCnt = min(cnt, maxCnt) # 만약 넣을 수 있는 개수가 가지고 있는 개수보다 클 경우 가지고 있는 개수만 넣기
+    ans += maxCnt # 넣은 개수만큼 더하기
+    before += maxCnt
+if before == volume:
+    print(ans)
+else:
+    print(-1)
